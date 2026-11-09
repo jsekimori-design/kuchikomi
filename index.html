@@ -105,7 +105,7 @@
   <!-- 3 -->
   <section class="step card" data-step="3">
     <h2>医師・看護師の対応で<br>気になった点はありましたか？</h2>
-    <p class="hint">あてはまるものがあれば選んでください。なければそのまま「次へ」を押してください</p>
+    <p class="hint">あてはまるものを選んでください。なければ「特になし」を選んでください</p>
     <div class="chips" data-q="staffBad" data-type="check"></div>
     <div class="btns">
       <button class="secondary" onclick="go(2)">戻る</button>
@@ -127,7 +127,7 @@
   <!-- 5 -->
   <section class="step card" data-step="5">
     <h2>訪問診療について<br>気になった点はありましたか？</h2>
-    <p class="hint">あてはまるものがあれば選んでください。なければそのまま「次へ」を押してください</p>
+    <p class="hint">あてはまるものを選んでください。なければ「特になし」を選んでください</p>
     <div class="chips" data-q="visitBad" data-type="check"></div>
     <div class="btns">
       <button class="secondary" onclick="go(4)">戻る</button>
@@ -149,7 +149,7 @@
   <!-- 7 -->
   <section class="step card" data-step="7">
     <h2>その他、気になった点は<br>ありましたか？</h2>
-    <p class="hint">あてはまるものがあれば選んでください。なければそのまま「次へ」を押してください。最後に、よろしければ一言お書きください（任意）</p>
+    <p class="hint">あてはまるものを選んでください。なければ「特になし」を選んでください。最後に、よろしければ一言お書きください（任意）</p>
     <div class="chips" data-q="otherBad" data-type="check"></div>
     <p style="margin:18px 0 6px;font-weight:bold">ひとことコメント（任意）</p>
     <textarea id="comment" placeholder="例）夜に相談したときも、すぐに対応していただきました"></textarea>
@@ -224,6 +224,7 @@ const QUESTIONS = {
       texts:["ちょっとしたことでも相談しやすい雰囲気でした。","気軽に相談できたのがありがたかったです。"] }
   ],
   staffBad: [
+    { key:"none", label:"特になし", none:true, texts:[] },
     { key:"setsumei", label:"説明がわかりにくいことがあった",
       texts:["説明が少しわかりにくいと感じることがありました。","もう少しわかりやすく説明していただけると助かりました。"] },
     { key:"kikanai",  label:"話を十分に聞いてもらえないと感じた",
@@ -248,6 +249,7 @@ const QUESTIONS = {
       texts:["家族のことまで気にかけてくださいました。","家族への気配りもしていただき、ありがたかったです。"] }
   ],
   visitBad: [
+    { key:"none", label:"特になし", none:true, texts:[] },
     { key:"jikoku",   label:"訪問時間が予定とずれることがあった",
       texts:["訪問の時間が予定とずれることがありました。","訪問時間が前後することがあり、少し困りました。"] },
     { key:"tsunagari",label:"連絡がつきにくいことがあった",
@@ -269,6 +271,7 @@ const QUESTIONS = {
     { key:"sonota",    label:"その他（コメント欄に記入）", texts:[] }
   ],
   otherBad: [
+    { key:"none", label:"特になし", none:true, texts:[] },
     { key:"tetsuzukiB",label:"手続き・書類がわかりにくかった",
       texts:["手続きや書類が少しわかりにくかったです。","事務的な手続きがもう少しわかりやすいと助かりました。"] },
     { key:"hiyou",     label:"費用の説明がわかりにくかった",
@@ -306,6 +309,15 @@ document.querySelectorAll(".chips").forEach(box=>{
         b.setAttribute("aria-pressed","true"); answers[q]=opt.key;
       }else{
         const on = b.getAttribute("aria-pressed")!=="true";
+        if(on){
+          // 「特になし」と他の項目は同時に選べないようにする
+          QUESTIONS[q].forEach((o,i)=>{
+            if(o!==opt && (opt.none || o.none)){
+              answers[q].delete(o.key);
+              box.children[i].setAttribute("aria-pressed","false");
+            }
+          });
+        }
         b.setAttribute("aria-pressed", String(on));
         on ? answers[q].add(opt.key) : answers[q].delete(opt.key);
       }
