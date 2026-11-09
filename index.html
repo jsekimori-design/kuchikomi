@@ -91,7 +91,7 @@
     </div>
   </section>
 
-  <!-- 2: 医師・看護師の対応 -->
+  <!-- 2 -->
   <section class="step card" data-step="2">
     <h2>医師・看護師の対応で<br>よかった点はありましたか？</h2>
     <p class="hint">あてはまるものをいくつでも選んでください</p>
@@ -102,33 +102,66 @@
     </div>
   </section>
 
-  <!-- 3: 訪問診療の質 -->
+  <!-- 3 -->
   <section class="step card" data-step="3">
-    <h2>訪問診療について<br>よかった点はありましたか？</h2>
-    <p class="hint">あてはまるものをいくつでも選んでください</p>
-    <div class="chips" data-q="visit" data-type="check"></div>
+    <h2>医師・看護師の対応で<br>気になった点はありましたか？</h2>
+    <p class="hint">あてはまるものがあれば選んでください。なければそのまま「次へ」を押してください</p>
+    <div class="chips" data-q="staffBad" data-type="check"></div>
     <div class="btns">
       <button class="secondary" onclick="go(2)">戻る</button>
       <button class="primary" onclick="go(4)">次へ</button>
     </div>
   </section>
 
-  <!-- 4: その他＋一言 -->
+  <!-- 4 -->
   <section class="step card" data-step="4">
+    <h2>訪問診療について<br>よかった点はありましたか？</h2>
+    <p class="hint">あてはまるものをいくつでも選んでください</p>
+    <div class="chips" data-q="visit" data-type="check"></div>
+    <div class="btns">
+      <button class="secondary" onclick="go(3)">戻る</button>
+      <button class="primary" onclick="go(5)">次へ</button>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="step card" data-step="5">
+    <h2>訪問診療について<br>気になった点はありましたか？</h2>
+    <p class="hint">あてはまるものがあれば選んでください。なければそのまま「次へ」を押してください</p>
+    <div class="chips" data-q="visitBad" data-type="check"></div>
+    <div class="btns">
+      <button class="secondary" onclick="go(4)">戻る</button>
+      <button class="primary" onclick="go(6)">次へ</button>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="step card" data-step="6">
     <h2>その他、よかった点は<br>ありましたか？</h2>
-    <p class="hint">あてはまるものを選び、よろしければ一言お書きください（任意）</p>
+    <p class="hint">あてはまるものをいくつでも選んでください</p>
     <div class="chips" data-q="other" data-type="check"></div>
+    <div class="btns">
+      <button class="secondary" onclick="go(5)">戻る</button>
+      <button class="primary" onclick="go(7)">次へ</button>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="step card" data-step="7">
+    <h2>その他、気になった点は<br>ありましたか？</h2>
+    <p class="hint">あてはまるものがあれば選んでください。なければそのまま「次へ」を押してください。最後に、よろしければ一言お書きください（任意）</p>
+    <div class="chips" data-q="otherBad" data-type="check"></div>
     <p style="margin:18px 0 6px;font-weight:bold">ひとことコメント（任意）</p>
     <textarea id="comment" placeholder="例）夜に相談したときも、すぐに対応していただきました"></textarea>
     <p class="note">お名前や病名など、個人が特定される内容は書かないようお願いします。</p>
     <div class="btns">
-      <button class="secondary" onclick="go(3)">戻る</button>
-      <button class="primary" onclick="makeDraft();go(5)">下書きを作る</button>
+      <button class="secondary" onclick="go(6)">戻る</button>
+      <button class="primary" onclick="makeDraft();go(8)">下書きを作る</button>
     </div>
   </section>
 
-  <!-- 5: 下書き確認 -->
-  <section class="step card" data-step="5">
+  <!-- 8: 下書き確認 -->
+  <section class="step card" data-step="8">
     <h2>口コミの下書き</h2>
     <p class="hint">この文章は、あなたの回答をもとに自動で作成した下書きです。自由に書き直してください。</p>
     <textarea id="draft" style="min-height:200px"></textarea>
@@ -142,7 +175,7 @@
     </ol>
     <p class="note">投稿するかどうかはご自身でお決めください。投稿しなくても、何の問題もありません。</p>
     <div class="btns">
-      <button class="secondary" onclick="go(4)">戻る</button>
+      <button class="secondary" onclick="go(7)">戻る</button>
       <button class="secondary" onclick="copyOnly()">コピーだけする</button>
     </div>
   </section>
@@ -171,12 +204,12 @@ const CONFIG = {
    ========================================================= */
 const QUESTIONS = {
   who: [
-    { key:"self",     label:"本人",
-      texts:["訪問診療で大変お世話になっています。","自宅での訪問診療でお世話になっています。"] },
     { key:"family",   label:"家族",
       texts:["家族が訪問診療で大変お世話になりました。","家族の訪問診療で長くお世話になりました。"] },
     { key:"guardian", label:"後見人",
-      texts:["後見人として関わっていた方が、訪問診療で大変お世話になりました。","後見人を務めていた方の訪問診療でお世話になりました。"] }
+      texts:["後見人として関わっていた方が、訪問診療で大変お世話になりました。","後見人を務めていた方の訪問診療でお世話になりました。"] },
+    { key:"cm",       label:"ケアマネジャー",
+      texts:["ケアマネジャーとして担当していた利用者様が、訪問診療でお世話になりました。","担当ケアマネジャーとして、利用者様の訪問診療で関わらせていただきました。"] }
   ],
   staff: [
     { key:"teinei",  label:"対応が丁寧だった",
@@ -190,6 +223,18 @@ const QUESTIONS = {
     { key:"soudan",  label:"相談しやすかった",
       texts:["ちょっとしたことでも相談しやすい雰囲気でした。","気軽に相談できたのがありがたかったです。"] }
   ],
+  staffBad: [
+    { key:"setsumei", label:"説明がわかりにくいことがあった",
+      texts:["説明が少しわかりにくいと感じることがありました。","もう少しわかりやすく説明していただけると助かりました。"] },
+    { key:"kikanai",  label:"話を十分に聞いてもらえないと感じた",
+      texts:["こちらの話をもう少し聞いていただきたいと感じることがありました。","話を十分に聞いてもらえないと感じた場面がありました。"] },
+    { key:"kotoba",   label:"言葉づかいや態度が気になった",
+      texts:["言葉づかいや態度が気になることがありました。","接し方について気になる場面がありました。"] },
+    { key:"awatada",  label:"診察が慌ただしく感じた",
+      texts:["診察が少し慌ただしく感じることがありました。","時間に追われているように感じることがありました。"] },
+    { key:"kyouyuu",  label:"スタッフ間で話が伝わっていないと感じた",
+      texts:["スタッフの間で情報が共有されていないと感じることがありました。","人によって話が違うと感じることがありました。"] }
+  ],
   visit: [
     { key:"anshin",  label:"自宅で安心して過ごせた",
       texts:["自宅で診ていただけたので、安心して過ごすことができました。","住み慣れた家で過ごせたことに感謝しています。"] },
@@ -202,6 +247,18 @@ const QUESTIONS = {
     { key:"kazoku",  label:"家族や周りへの気配りがあった",
       texts:["家族のことまで気にかけてくださいました。","家族への気配りもしていただき、ありがたかったです。"] }
   ],
+  visitBad: [
+    { key:"jikoku",   label:"訪問時間が予定とずれることがあった",
+      texts:["訪問の時間が予定とずれることがありました。","訪問時間が前後することがあり、少し困りました。"] },
+    { key:"tsunagari",label:"連絡がつきにくいことがあった",
+      texts:["連絡がつきにくいと感じることがありました。","電話がなかなかつながらないことがありました。"] },
+    { key:"kyuuhen",  label:"急な相談への対応に時間がかかった",
+      texts:["急な相談への対応に時間がかかることがありました。","困ったときの対応がもう少し早いと助かりました。"] },
+    { key:"kaisuu",   label:"訪問の回数や時間が足りないと感じた",
+      texts:["訪問の回数や時間がもう少しあればと感じました。","訪問の時間が短いと感じることがありました。"] },
+    { key:"kazokuSup",label:"家族への説明や支えが足りないと感じた",
+      texts:["家族への説明や支えがもう少しあればと感じました。","家族としての不安を相談しにくいと感じることがありました。"] }
+  ],
   other: [
     { key:"fun-iki",   label:"訪問時の雰囲気",
       texts:["訪問のときの雰囲気がいつもあたたかかったです。","訪問してくださる皆さんの雰囲気がやわらかく、心が和みました。"] },
@@ -210,13 +267,26 @@ const QUESTIONS = {
     { key:"renkei",    label:"ケアマネジャー等との連携",
       texts:["ケアマネジャーさんなど、関係する方々との連携もスムーズでした。","ほかの事業所の方との連携もしっかりしていると感じました。"] },
     { key:"sonota",    label:"その他（コメント欄に記入）", texts:[] }
+  ],
+  otherBad: [
+    { key:"tetsuzukiB",label:"手続き・書類がわかりにくかった",
+      texts:["手続きや書類が少しわかりにくかったです。","事務的な手続きがもう少しわかりやすいと助かりました。"] },
+    { key:"hiyou",     label:"費用の説明がわかりにくかった",
+      texts:["費用についての説明が少しわかりにくかったです。","費用のことをもう少し丁寧に説明していただけると安心でした。"] },
+    { key:"renkeiB",   label:"ケアマネジャー等との連携に不安があった",
+      texts:["関係する事業所との連携に少し不安を感じることがありました。","ケアマネジャーさんなどとの情報共有がもう少しあればと感じました。"] },
+    { key:"manner",    label:"訪問時のマナー（駐車・身だしなみ等）が気になった",
+      texts:["訪問時のマナーで気になることがありました。","駐車や身だしなみなど、訪問時のマナーで気になる点がありました。"] },
+    { key:"sonotaB",   label:"その他（コメント欄に記入）", texts:[] }
   ]
 };
 const CLOSINGS = ["本当にありがとうございました。","心より感謝申し上げます。"];
+const BAD_INTRO = ["一方で、","ただ、"];                     // 気になった点の前につける言葉（よかった点もある場合）
+const BAD_CLOSE = ["今後のさらなる改善に期待しています。","より良いクリニックになることを願っています。"];
 
 /* ===== 以下は動作部分（通常は変更不要） ===== */
-const answers = { who:null, staff:new Set(), visit:new Set(), other:new Set() };
-const TOTAL = 6;
+const answers = { who:null, staff:new Set(), staffBad:new Set(), visit:new Set(), visitBad:new Set(), other:new Set(), otherBad:new Set() };
+const TOTAL = 9;
 
 document.getElementById("clinicName").textContent = CONFIG.CLINIC_NAME;
 document.title = "口コミ作成のお手伝い｜" + CONFIG.CLINIC_NAME;
@@ -263,16 +333,22 @@ function textsFor(q){
 function makeDraft(){
   const parts = [];
   const whoOpt = QUESTIONS.who.find(o=>o.key===answers.who) || QUESTIONS.who[0];
-  const body = [...textsFor("staff"), ...textsFor("visit"), ...textsFor("other")];
+  const good = [...textsFor("staff"), ...textsFor("visit"), ...textsFor("other")];
+  const bad  = [...textsFor("staffBad"), ...textsFor("visitBad"), ...textsFor("otherBad")];
   let comment = document.getElementById("comment").value.trim();
   if(comment && !/[。！!？?]$/.test(comment)) comment += "。";
 
-  const hasContent = body.length>0 || comment;
+  const hasContent = good.length>0 || bad.length>0 || comment;
   document.getElementById("emptyMsg").style.display = hasContent ? "none" : "block";
   if(hasContent){
     parts.push(pick(whoOpt.texts));
-    parts.push(...body);
+    parts.push(...good);
+    if(bad.length){
+      if(good.length) bad[0] = pick(BAD_INTRO) + bad[0];
+      parts.push(...bad);
+    }
     if(comment) parts.push(comment);
+    if(bad.length) parts.push(pick(BAD_CLOSE));
     parts.push(pick(CLOSINGS));
   }
   document.getElementById("draft").value = parts.join("");
